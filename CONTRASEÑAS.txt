@@ -1,0 +1,10 @@
+contraseña
+1 PRUEVA
+CORREO:admin@admin
+CONTRASEÑA:admin
+
+2 JOSE ZAVALETA
+ CORREO:josezavaletac94@gmail.com
+CONTRASEÑA:  1234
+
+3 
