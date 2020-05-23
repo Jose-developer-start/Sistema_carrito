@@ -1,5 +1,4 @@
 <?php
-include "global/config.php";
 include "global/db.php";
 include "carrito.php";
 include "templates/nabvar.php"
