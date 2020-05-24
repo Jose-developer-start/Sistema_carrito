@@ -1,289 +1,149 @@
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Factura</title>
-		<link rel="stylesheet" href="style.css">
-		<link rel="license" href="https://www.opensource.org/licenses/mit-license/">
-		<script src="script.js"></script>
-		<style>
-		/* reset */
-
-*
-{
-	border: 0;
-	box-sizing: content-box;
-	color: inherit;
-	font-family: inherit;
-	font-size: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-	line-height: inherit;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
-	vertical-align: top;
-}
-
-/* content editable */
-
-*[contenteditable] { border-radius: 0.25em; min-width: 1em; outline: 0; }
-
-*[contenteditable] { cursor: pointer; }
-
-*[contenteditable]:hover, *[contenteditable]:focus, td:hover *[contenteditable], td:focus *[contenteditable], img.hover { background: #DEF; box-shadow: 0 0 1em 0.5em #DEF; }
-
-span[contenteditable] { display: inline-block; }
-
-/* heading */
-
-h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; }
-
-/* table */
-
-table { font-size: 75%; table-layout: fixed; width: 100%; }
-table { border-collapse: separate; border-spacing: 2px; }
-th, td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; }
-th, td { border-radius: 0.25em; border-style: solid; }
-th { background: #EEE; border-color: #BBB; }
-td { border-color: #DDD; }
-
-/* page */
-
-html { font: 16px/1 'Open Sans', sans-serif; overflow: auto; padding: 0.5in; }
-html { background: #999; cursor: default; }
-
-body { box-sizing: border-box; height: 11in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
-body { background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
-
-/* header */
-
-header { margin: 0 0 3em; }
-header:after { clear: both; content: ""; display: table; }
-
-header h1 { background: #000; border-radius: 0.25em; color: #FFF; margin: 0 0 1em; padding: 0.5em 0; }
-header address { float: left; font-size: 75%; font-style: normal; line-height: 1.25; margin: 0 1em 1em 0; }
-header address p { margin: 0 0 0.25em; }
-header span, header img { display: block; float: right; }
-header span { margin: 0 0 1em 1em; max-height: 25%; max-width: 60%; position: relative; }
-header img { max-height: 100%; max-width: 100%; }
-header input { cursor: pointer; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; height: 100%; left: 0; opacity: 0; position: absolute; top: 0; width: 100%; }
-
-/* article */
-
-article, article address, table.meta, table.inventory { margin: 0 0 3em; }
-article:after { clear: both; content: ""; display: table; }
-article h1 { clip: rect(0 0 0 0); position: absolute; }
-
-article address { float: left; font-size: 125%; font-weight: bold; }
-
-/* table meta & balance */
-
-table.meta, table.balance { float: right; width: 36%; }
-table.meta:after, table.balance:after { clear: both; content: ""; display: table; }
-
-/* table meta */
-
-table.meta th { width: 40%; }
-table.meta td { width: 60%; }
-
-/* table items */
-
-table.inventory { clear: both; width: 100%; }
-table.inventory th { font-weight: bold; text-align: center; }
-
-table.inventory td:nth-child(1) { width: 26%; }
-table.inventory td:nth-child(2) { width: 38%; }
-table.inventory td:nth-child(3) { text-align: right; width: 12%; }
-table.inventory td:nth-child(4) { text-align: right; width: 12%; }
-table.inventory td:nth-child(5) { text-align: right; width: 12%; }
-
-/* table balance */
-
-table.balance th, table.balance td { width: 50%; }
-table.balance td { text-align: right; }
-
-/* aside */
-
-aside h1 { border: none; border-width: 0 0 1px; margin: 0 0 1em; }
-aside h1 { border-color: #999; border-bottom-style: solid; }
-
-/* javascript */
-
-.add, .cut
-{
-	border-width: 1px;
-	display: block;
-	font-size: .8rem;
-	padding: 0.25em 0.5em;	
-	float: left;
-	text-align: center;
-	width: 0.6em;
-}
-
-.add, .cut
-{
-	background: #9AF;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-	background-image: -moz-linear-gradient(#00ADEE 5%, #0078A5 100%);
-	background-image: -webkit-linear-gradient(#00ADEE 5%, #0078A5 100%);
-	border-radius: 0.5em;
-	border-color: #0076A3;
-	color: #FFF;
-	cursor: pointer;
-	font-weight: bold;
-	text-shadow: 0 -1px 2px rgba(0,0,0,0.333);
-}
-
-.add { margin: -2.5em 0 0; }
-
-.add:hover { background: #00ADEE; }
-
-.cut { opacity: 0; position: absolute; top: 0; left: -1.5em; }
-.cut { -webkit-transition: opacity 100ms ease-in; }
-
-tr:hover .cut { opacity: 1; }
-
-@media print {
-	* { -webkit-print-color-adjust: exact; }
-	html { background: none; padding: 0; }
-	body { box-shadow: none; margin: 0; }
-	span:empty { display: none; }
-	.add, .cut { display: none; }
-}
-
-@page { margin: 0; }
-		</style>
-		
-	</head>
-	<body onload="window.print()" >
-	
-	
-	
-	
-	<?php
-	ob_start();	
-	include ('db.php');
-
-	$pid = $_GET['pid'];
-	
-	
-	
-	$sql ="select * from payment where id = '$pid' ";
-	$re = mysqli_query($con,$sql);
-	while($row=mysqli_fetch_array($re))
-	{
-	
-	?>
-		<header>
-			<h1>Factura</h1>
-			<address >
-				<p>TECHNOLOGY BOX</p>
-				<p> BARRIO SAN JACINTO SAN SALVADOR,EL SALVADOR
-				<p>+503 74624722</p>
-			</address>
-			<span><img alt="" src="assets/img/sun.png"></span>
-		</header>
-		<article>
-			<h1>	Recipiente</h1>
-			<address >
-				<p><?php echo $title.$fname." ".$lname ?> <br></p>
-			</address>
-			<table class="cliente">
-				<tr>
-					<th><span >Correo</span></th>
-					<td><span ><?php echo $id; ?></span></td>
-				</tr>
-				<tr>
-					<th><span >Fecha</span></th>
-					<td><span ><?php echo $cout; ?> </span></td>
-				</tr>
-            <table class="ventas">
-				<tr>
-					<th><span >Apellido</span></th>
-					<td><span ><?php echo $id; ?></span></td>
-				</tr>
-				<tr>
-					<th><span >NombreCompleto</span></th>
-					<td><span ><?php echo $cout; ?> </span></td>
-				</tr>
-
-				
-			</table>
-			<table class="productos">
-				<thead>
-					<tr>
-						<th><span >NombreProd</span></th>
-						<th><span >Marca</span></th>
-						<th><span >CodigoProd</span></th>
-						<th><span >Cantidad</span></th>
-						<th><span>precio</span></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><span ><?php echo $troom; ?></span></td>
-						<td><span ><?php echo $days; ?> </span></td>
-						<td><span data-prefix>$</span><span ><?php  echo $type_of_room;?></span></td>
-						<td><span ><?php echo $nroom;?> </span></td>
-						<td><span data-prefix>$</span><span><?php echo $ttot; ?></span></td>
-					</tr>
-					<tr>
-						<td><span ><?php echo $bed; ?></span></td>
-						<td><span ><?php echo $days; ?></span></td>
-						<td><span data-prefix>$</span><span ><?php  echo $type_of_bed;?></span></td>
-						<td><span ><?php echo $nroom;?></span></td>
-						<td><span data-prefix>$</span><span><?php echo $mepr; ?></span></td>
-					</tr>
-					<tr>
-						<td><span ><?php echo $meal; ?>  </span></td>
-						<td><span ><?php echo $days; ?></span></td>
-						<td><span data-prefix>$</span><span ><?php  echo $type_of_meal?></span></td>
-						<td><span ><?php echo $nroom;?> </span></td>
-						<td><span data-prefix>$</span><span><?php echo $type_of_meal; ?></span></td>
-					</tr>
-				</tbody>
-			</table>
-			
-			<table class="detalleventa">
-				<tr>
-					<th><span >Total</span></th>
-					<td><span data-prefix>$</span><span><?php echo $fintot; ?></span></td>
-				</tr>
-				<tr>
-					<th><span >	Cantidad pagada</span></th>
-					<td><span data-prefix>$</span><span >0.00</span></td>
-				</tr>
-				<tr>
-					<th><span >Saldo adeudado</span></th>
-					<td><span data-prefix>$</span><span><?php echo $fintot; ?></span></td>
-				</tr>
-			</table>
-		</article>
-		<aside>
-			<h1><span >Contáctenos</span></h1>
-			<div >
-				<p align="center"> Email :TECHNOLOGY BOX@GMAIL.COM| Phone :+503 74624722 </p>
-			</div>
-		</aside>
-	</body>
-</html>
 <?php
-$free="Free";
-$nul = null;
-$rpsql = "UPDATE `room` SET `place`='$free',`cusid`='$nul' where `cusid`='$id'";
-if(mysqli_query($con,$rpsql))
-{
-	$delsql= "DELETE FROM `roombook` WHERE id='$id' ";
-	
-	if(mysqli_query($con,$delsql))
-	{
-	
-	}
+include("global/db.php");
+//includes para mostrar los datos en print.php
+//Capturando datos para factura
+
+if(isset($_POST['enviar'])){
+  $correo = $_POST['correo'];
+  $sentencia_query_prod = $pdo->prepare("SELECT * FROM productos");
+  $sentencia_query_prod->execute();
+  $cond = $sentencia_query_prod->fetchall();
+
+  $id_usuario = $correo;
+  $sentencia_query = $pdo->prepare("SELECT * FROM ventas INNER JOIN detalleventa ON ventas.ID=detalleventa.IDVENTA WHERE Correo='$correo'");
+  $sentencia_query->execute();
+  $ventas = $sentencia_query->fetchall();
 }
-?>
-<?php 
-
-ob_end_flush();
 
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Invoice</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="admin/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="admin/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="admin/dist/css/AdminLTE.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body onload="window.print();">
+<div class="wrapper">
+  <!-- Main content -->
+  <section class="invoice">
+    <!-- title row -->
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="page-header">
+          <i><img src="admin/dist/img/logo.png" style="height: 50px; width: 70px; background: #34495e;"></i> TECHNOLOGY, SV.
+          <small class="pull-right">Date:<?php echo date("D/M/Y");?></small>
+        </h2>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        de
+        <address>
+          <strong>Technology, Inc.</strong><br>
+          El salvador, San Salvador<br>
+          San Jacinto, CA 9910<br>
+          Phone: (503) 78123445<br>
+          Nombre de comprador:<?php foreach($ventas as $fila){ echo $fila['Nombre'];break; }?>
+        </address>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Table row -->
+    <div class="row">
+      <div class="col-xs-12 table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Nombre del producto</th>
+            <th>Correo del cliente</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+          </tr>
+          </thead>
+          <tbody>
+          <?php foreach($ventas as $fila){?>
+            <tr>
+
+              <td><?php
+                foreach($cond as $fila1){
+                  $id = $fila1['CodigoProd'];
+                  $nombre_prod = $fila1['NombreProd'];
+                  if($id==$fila['IDPRODUCTO']){
+                  echo $nombre_prod;
+                }
+              } ?>
+                
+              </td>
+
+              <td><?php echo $fila['Correo']; ?></td>
+              <td><?php echo $fila['Cantidad']; ?></td>
+              <td><?php echo $fila['PRECIOUNITARIO']; ?></td>
+            </tr>
+          <?php }?>
+        </table>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <!-- accepted payments column -->
+      <div class="col-xs-6">
+        <p class="lead">Método utilizado de pago:</p>
+        <!--<img src="dist/img/credit/visa.png" alt="Visa">
+        <img src="dist/img/credit/mastercard.png" alt="Mastercard">
+        <img src="dist/img/credit/american-express.png" alt="American Express">-->
+        <img src="admin/dist/img/credit/paypal2.png" alt="Paypal">
+
+        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+          Este comprabante demuestra que su compra ha sido exitosa,
+          vuelva pronto.
+        </p>
+      </div>
+      <!-- /.col -->
+      <div class="col-xs-6">
+        <p class="lead">Fecha: <?php echo date("D/M/Y");?></p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th style="width:50%">Total pago:</th>
+              <td>$<?php foreach($ventas as $fila){ echo $fila['Total'];break; }?></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- ./wrapper -->
+</body>
+</html>

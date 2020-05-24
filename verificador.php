@@ -70,7 +70,7 @@ if($state=="approved"){
     $sentencia->execute();
     //MODIFIACION DE DATOS
     $completado=$sentencia->rowCount();
-
+    //Destruimos la SESSION
     session_destroy();
 
 
@@ -88,8 +88,16 @@ if($state=="approved"){
     
     <p><?php if($completado>=1){?>
     <div class="row">
-        <a class="btn btn-primary" href="print.php">Factura</a>
-        
+        <div class="col-md-12">
+            <form action="print.php" method="post">
+                <div class="form-group">
+                    <label>Para obtener su factura debe ingresar el correo su compra</label>
+                    <input type="email" name="correo" class="form-control" required>
+                </div>
+                <input type="submit" name="enviar" value="Factura" class="btn btn-primary">
+            </form>
+            
+        </div>        
     </div>
     </p>
     <?php }?>
