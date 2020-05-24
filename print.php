@@ -9,7 +9,7 @@ if(isset($_POST['enviar'])){
   $sentencia_query_prod->execute();
   $cond = $sentencia_query_prod->fetchall();
 
-  $id_usuario = $correo;
+ 
   $sentencia_query = $pdo->prepare("SELECT * FROM ventas INNER JOIN detalleventa ON ventas.ID=detalleventa.IDVENTA WHERE Correo='$correo'");
   $sentencia_query->execute();
   $ventas = $sentencia_query->fetchall();
