@@ -2,7 +2,7 @@
 //ARCHIVOS DE CONFIGURACION Y NAVBAR Y FOOTER
 include "global/db.php";
 include "carrito.php";
-include "templates/nabvar.php"
+include "templates/nabvar.php";
 ?>
 <!-----------CONTENIDO------------>
           <br>
@@ -54,7 +54,7 @@ include "templates/nabvar.php"
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail">
                     <div class="card">
-                        <a><img title="<?php echo $prod['NombreProd'];?>" alt="Titulo" class="card-img-top" alt="200" src="./admin/dist/imgproduct/<?php echo $prod['Imagen']; ?>" data-toggle="popover" data-trigger="hover" data-content="Descripcion de producto" height="200px"></a>
+                        <a><img title="<?php echo $prod['NombreProd'];?>" alt="Titulo" class="card-img-top" alt="200" src="./admin/dist/imgproduct/<?php echo $prod['Imagen']; ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $prod['Descripcion'];?>" height="200px"></a>
                         <div class="caption">
                           <div class="card-body">
                             <p><?php echo $prod['NombreProd']; ?></p>
