@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2020 a las 07:32:33
+-- Tiempo de generación: 25-05-2020 a las 15:36:03
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.2.29
 
@@ -41,56 +41,7 @@ CREATE TABLE `administrador` (
 --
 
 INSERT INTO `administrador` (`ID`, `Nombres`, `Apellidos`, `Correo`, `Password`, `Foto`) VALUES
-(16, 'Admin', 'Admin', 'admin@admin', 'admin', '1588740057_montaje python.jpg');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categoria`
---
-
-CREATE TABLE `categoria` (
-  `CodigoCat` varchar(30) NOT NULL,
-  `Nombre` varchar(30) NOT NULL,
-  `Descripcion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `categoria`
---
-
-INSERT INTO `categoria` (`CodigoCat`, `Nombre`, `Descripcion`) VALUES
-('C1', 'Monitores', 'Articulos de entretenimiento y diversión'),
-('C2', 'Multimedia', 'Articulos de entretenimiento y diversión'),
-('C3', 'Móviles', 'Teléfonos celulares smartphones'),
-('C6', 'tecnologia', 'solo productos relacionados a celulares');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cliente`
---
-
-CREATE TABLE `cliente` (
-  `NIT` varchar(30) NOT NULL,
-  `Nombre` varchar(30) NOT NULL,
-  `NombreCompleto` varchar(70) NOT NULL,
-  `Apellido` varchar(70) NOT NULL,
-  `Clave` text NOT NULL,
-  `Direccion` varchar(200) NOT NULL,
-  `Telefono` int(20) NOT NULL,
-  `Email` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `cliente`
---
-
-INSERT INTO `cliente` (`NIT`, `Nombre`, `NombreCompleto`, `Apellido`, `Clave`, `Direccion`, `Telefono`, `Email`) VALUES
-('12345678901234567-8', 'samsung', 'mobile cellphone', 'rivas ', '2d3bf1b20e09f18da1007a68e259a298', 'san isidro', 74474442, 'samsung.mobile@gmail.com'),
-('1234567890123456789-7', 'Anderson', 'Anderson Fernando', 'Argueta Jovel', '25d55ad283aa400af464c76d713c07ad', 'zacatecoluca, la paz', 74474442, 'arguetaanderson953@gmail.com'),
-('2323343234454545453374-3', 'jose', 'Jose Miguel', 'Deodanes Perez', '2d3bf1b20e09f18da1007a68e259a298', 'dirCliente', 77777522, 'josedeodanes99@gmail.com'),
-('97237473439473798374374932748', 'Invitado', 'Jose', 'Rivas', '2d3bf1b20e09f18da1007a68e259a298', 'San Salvador', 74474442, 'invitado@gob.sv');
+(24, 'admin', 'admin', 'admin@admin', 'admin', '1590347211_1590037742_avatar5.png');
 
 -- --------------------------------------------------------
 
@@ -127,6 +78,7 @@ CREATE TABLE `productos` (
   `Precio` decimal(20,0) NOT NULL,
   `Modelo` text NOT NULL,
   `Marca` varchar(255) NOT NULL,
+  `Descripcion` text NOT NULL,
   `Imagen` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -134,38 +86,11 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`CodigoProd`, `NombreProd`, `Precio`, `Modelo`, `Marca`, `Imagen`) VALUES
-(1, 'Video Camara', '3000', 'HMX-F90', 'Samsung', '1588741910_1588048345_Samsung-HMX-F90-video-camera-2.jpg'),
-(24, 'Samsung Galaxy', '1000', 'Plus', 'Samsung', '1588740455_1588048439_galaxy-s7-edge_gallery_right_gold_s3.png'),
-(27, 'Monitor', '180', 'HP L718', 'hp', '1588741844_1588084675_1588049560_es_LT32E310EW-EN_001_Front_black.jpg'),
-(28, 'Teclado', '15', 'Logitex', 'Logitex', '1588771014_1588088653_318-3182180_teclado-png-transparent-png.png'),
-(29, 'Bocina inalambrica', '35', 'Omega DX10', 'Omega', '1588771095_es_WAM6500-ZF_001_Front_black.jpg');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `proveedor`
---
-
-CREATE TABLE `proveedor` (
-  `NITProveedor` varchar(30) NOT NULL,
-  `NombreProveedor` varchar(30) NOT NULL,
-  `Direccion` varchar(200) NOT NULL,
-  `Telefono` int(20) NOT NULL,
-  `PaginaWeb` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `proveedor`
---
-
-INSERT INTO `proveedor` (`NITProveedor`, `NombreProveedor`, `Direccion`, `Telefono`, `PaginaWeb`) VALUES
-('0001781', 'Sony', 'Minato, Tokio, Japón', 22596485, 'www.sony.com'),
-('0001782', 'HTC', 'Taoyuan, Taiwán, (República de China)', 25987456, 'www.htc.com'),
-('0001783', 'TCL', 'Huizhou, Guangdong, China', 25698745, 'tcl.com.ar'),
-('0001785', 'Samsung', 'Samsung Town, Seúl, Corea del Sur', 22504787, 'www.samsung.com'),
-('0001787', 'LG', 'Seúl,Corea del Sur', 26589874, 'www.lg.com'),
-('0001788', 'Compaq', 'Houston, Texas, EE.UU', 24569875, 'www.compaq.com');
+INSERT INTO `productos` (`CodigoProd`, `NombreProd`, `Precio`, `Modelo`, `Marca`, `Descripcion`, `Imagen`) VALUES
+(1, 'Video Camara', '3000', 'HMX-F90', 'Samsung', 'color negro, memoria de 32GB', '1590348860_1590002297_1588048345_Samsung-HMX-F90-video-camera-2.jpg'),
+(24, 'Samsung Galaxy', '1000', 'Plus', 'Samsung', 'color negro, RAM de 8GB', '1590413441_1590002348_1588048439_galaxy-s7-edge_gallery_right_gold_s3.png'),
+(29, 'Bocina inalambrica', '35', 'Omega DX10', 'Omega', '', '1588771095_es_WAM6500-ZF_001_Front_black.jpg'),
+(31, 'Teclado', '15', 'X Tech', 'Tech', 'color negro', '1590413539_1590002591_1588771014_1588088653_318-3182180_teclado-png-transparent-png.png');
 
 -- --------------------------------------------------------
 
@@ -204,18 +129,6 @@ ALTER TABLE `administrador`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`CodigoCat`);
-
---
--- Indices de la tabla `cliente`
---
-ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`NIT`);
-
---
 -- Indices de la tabla `detalleventa`
 --
 ALTER TABLE `detalleventa`
@@ -228,12 +141,6 @@ ALTER TABLE `detalleventa`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`CodigoProd`);
-
---
--- Indices de la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  ADD PRIMARY KEY (`NITProveedor`);
 
 --
 -- Indices de la tabla `ventas`
@@ -249,7 +156,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `administrador`
 --
 ALTER TABLE `administrador`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleventa`
@@ -261,7 +168,7 @@ ALTER TABLE `detalleventa`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `CodigoProd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `CodigoProd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
